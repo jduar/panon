@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasma5support as Plasma5Support
 import "utils.js" as Utils
 
 /*
@@ -8,7 +9,7 @@ import "utils.js" as Utils
  * the shader sources.
  */
 
-PlasmaCore.DataSource {
+Plasma5Support.DataSource {
 
     readonly property var cfg:plasmoid.configuration
     engine: 'executable'

@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0 as QQC2
 
 import org.kde.kirigami 2.3 as Kirigami
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasma5support as Plasma5Support
 
 import "utils.js" as Utils
 
@@ -178,7 +179,7 @@ Kirigami.FormLayout {
     readonly property string sh_get_devices:Utils.chdir_scripts_root()+'python3 -m panon.backend.get_devices'
     readonly property string sh_get_pa_devices:Utils.chdir_scripts_root()+'python3 -m panon.backend.get_pa_devices'
 
-    PlasmaCore.DataSource {
+    Plasma5Support.DataSource {
         //id: getOptionsDS
         engine: 'executable'
         connectedSources: [

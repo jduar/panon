@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtWebSockets 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasma5support as Plasma5Support
 import "utils.js" as Utils
 /*
  * This module starts a python back-end client, 
@@ -60,7 +61,7 @@ Item{
         return cmd
     }
 
-    PlasmaCore.DataSource {
+    Plasma5Support.DataSource {
         engine: 'executable'
         connectedSources: [startBackEnd]
         onNewData:{
