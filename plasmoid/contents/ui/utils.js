@@ -1,8 +1,9 @@
 function get_root() {
-    var p_ui = plasmoid.file("ui")
-    p_ui = p_ui.split('/')
-    p_ui.pop(-1)
-    return p_ui.join('/')
+    // The plasmoid.file method seems to be missing, so this workaround was used
+    var path = plasmoid.metaData.fileName
+    path = path.split('/')
+    path[path.length - 1] = 'contents'
+    return path.join('/')
 }
 
 function get_scripts_root() {
