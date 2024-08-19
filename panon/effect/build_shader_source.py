@@ -139,20 +139,23 @@ obj['gldft'] = read_file(applet_effect_home / 'gldft.fsh')
 obj['enable_iChannel0'] = 'iChannel0' in (read_file(image_shader_path) + (read_file(Path(effect.path) / 'buffer.frag') if (Path(effect.path) / 'buffer.frag').exists() else ""))
 obj['enable_iChannel1'] = 'iChannel1' in (read_file(image_shader_path) + (read_file(Path(effect.path) / 'buffer.frag') if (Path(effect.path) / 'buffer.frag').exists() else ""))
 
+# Create the temporary directory for the shader files.
+tmp_dir = Path('/tmp/panon')
+tmp_dir.mkdir(exist_ok=True)
 
 if 'image_shader' in obj and obj['image_shader']:
-    frag, frag_path = tempfile.mkstemp(suffix='.frag')
+    frag, frag_path = tempfile.mkstemp(dir=tmp_dir, suffix='.frag')
     os.write(frag, obj['image_shader'].encode())
     os.close(frag)
-    qsb, qsb_path = tempfile.mkstemp(suffix='.qsb')
+    qsb, qsb_path = tempfile.mkstemp(dir=tmp_dir, suffix='.qsb')
     subprocess.run(['/usr/lib/qt6/bin/qsb', '--qt6', frag_path, '-o', qsb_path], check=True)
     obj['image_shader'] = qsb_path
 
 if 'buffer_shader' in obj and obj['buffer_shader']:
-    frag, frag_path = tempfile.mkstemp(suffix='.frag')
+    frag, frag_path = tempfile.mkstemp(dir=tmp_dir, suffix='.frag')
     os.write(frag, obj['buffer_shader'].encode())
     os.close(frag)
-    qsb, qsb_path = tempfile.mkstemp(suffix='.qsb')
+    qsb, qsb_path = tempfile.mkstemp(dir=tmp_dir, suffix='.qsb')
     subprocess.run(['/usr/lib/qt6/bin/qsb', '--qt6', frag_path, '-o', qsb_path], check=True)
     obj['buffer_shader'] = qsb_path
 
