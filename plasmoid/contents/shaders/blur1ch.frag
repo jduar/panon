@@ -1,5 +1,3 @@
-#version 130
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     fragCoord=fragCoord/iResolution.xy;
     float px_step=0.0005;

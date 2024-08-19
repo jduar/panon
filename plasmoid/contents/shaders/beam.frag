@@ -1,5 +1,3 @@
-#version 130
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     float x=fragCoord.x/iResolution.x;
 

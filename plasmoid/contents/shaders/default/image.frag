@@ -1,5 +1,3 @@
-#version 130
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     fragCoord=fragCoord/iResolution.xy;
     vec4 sample1= texture(iChannel1, vec2(fragCoord.x,0)) ;

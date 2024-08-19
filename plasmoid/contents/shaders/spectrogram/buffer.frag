@@ -1,5 +1,3 @@
-#version 130
-
 #define shrink_step $shrink_step
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {

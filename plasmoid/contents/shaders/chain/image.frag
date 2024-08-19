@@ -1,5 +1,3 @@
-#version 130
-
 #define particle_opacity $particle_opacity
 #define height_ratio $height_ratio
 #define strength $strength

@@ -1,5 +1,3 @@
-#version 130
-
 float height(float distanc,float raw_height) {
     return raw_height*exp(-distanc*distanc*4);
 }

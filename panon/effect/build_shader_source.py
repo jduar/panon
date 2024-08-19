@@ -1,5 +1,8 @@
+import os
 import sys
 import json
+import tempfile
+import subprocess
 from pathlib import Path
 
 from docopt import docopt
@@ -64,12 +67,10 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
         meta = json.loads(meta_file.read_bytes())
         arguments_map = {arg['name']: format_value(arg['type'], value) for arg, value in zip(meta['arguments'], effect_arguments)}
 
-    # Extract glsl version
-    version = next(read_file_lines(main_file))
-    source = version
+    source = ""
     for path in files:
         if path == main_file:
-            for line in list(read_file_lines(path))[1:]:
+            for line in list(read_file_lines(path)):
                 lst = line.split()
                 if len(lst) >= 3:
                     # Search for used arguments(start with $) in macro definitions.
@@ -100,9 +101,9 @@ if not effect.name.endswith('.frag'):
     image_shader_path /= 'image.frag'
 
 image_shader_files = [
+    applet_effect_home / 'shadertoy-api-head.fsh',
     applet_effect_home / 'hsluv-glsl.fsh',
     applet_effect_home / 'utils.fsh',
-    applet_effect_home / 'shadertoy-api-head.fsh',
     image_shader_path,
     applet_effect_home / 'shadertoy-api-foot.fsh',
 ]
@@ -137,6 +138,23 @@ obj['wave_buffer'] = read_file(applet_effect_home / 'wave-buffer.fsh')
 obj['gldft'] = read_file(applet_effect_home / 'gldft.fsh')
 obj['enable_iChannel0'] = 'iChannel0' in (read_file(image_shader_path) + (read_file(Path(effect.path) / 'buffer.frag') if (Path(effect.path) / 'buffer.frag').exists() else ""))
 obj['enable_iChannel1'] = 'iChannel1' in (read_file(image_shader_path) + (read_file(Path(effect.path) / 'buffer.frag') if (Path(effect.path) / 'buffer.frag').exists() else ""))
+
+
+if 'image_shader' in obj and obj['image_shader']:
+    frag, frag_path = tempfile.mkstemp(suffix='.frag')
+    os.write(frag, obj['image_shader'].encode())
+    os.close(frag)
+    qsb, qsb_path = tempfile.mkstemp(suffix='.qsb')
+    subprocess.run(['/usr/lib/qt6/bin/qsb', '--qt6', frag_path, '-o', qsb_path], check=True)
+    obj['image_shader'] = qsb_path
+
+if 'buffer_shader' in obj and obj['buffer_shader']:
+    frag, frag_path = tempfile.mkstemp(suffix='.frag')
+    os.write(frag, obj['buffer_shader'].encode())
+    os.close(frag)
+    qsb, qsb_path = tempfile.mkstemp(suffix='.qsb')
+    subprocess.run(['/usr/lib/qt6/bin/qsb', '--qt6', frag_path, '-o', qsb_path], check=True)
+    obj['buffer_shader'] = qsb_path
 
 json.dump(obj, sys.stdout)
 logger.log('obj : %s',json.dumps(obj))

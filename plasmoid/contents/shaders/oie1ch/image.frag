@@ -1,5 +1,3 @@
-#version 130
-
 /*
  * Inspired by OieIcons
  * https://store.kde.org/p/1299058/

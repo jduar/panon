@@ -1,5 +1,3 @@
-#version 130
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     fragCoord=fragCoord/iResolution.xy;
     // A list of available data channels
