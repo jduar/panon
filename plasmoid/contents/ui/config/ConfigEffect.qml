@@ -23,14 +23,6 @@ Kirigami.FormLayout {
     NewStuff.Button {
         downloadNewWhat: i18n("Effects")
         configFile: Utils.get_root() + "/config/panon.knsrc"
-        onChangedEntriesChanged:{
-            /*
-             * Triggers the executable DataSource to execute this line again: 
-             * if(shaderOptions.count<1)return[sh_get_visual_effects]
-             * So that the list model shaderOptions will be refreshed.
-             */
-            shaderOptions.clear()
-        }
     }
 
     RowLayout {
@@ -115,7 +107,6 @@ Kirigami.FormLayout {
                         var obj= component.createObject(root, {
                             index:index,
                             root:root,
-                            effectArgValues:cfg_effectArgValues,
                         });
                             
                         textfieldlst.push(obj)

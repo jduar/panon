@@ -6,15 +6,14 @@ QQC2.CheckBox {
 
     property var root
     property int index
-    property var effectArgValues
 
 
     visible:root.effect_arguments.length>index
     text: visible?root.effect_arguments[index]["name"]:""
-    checked:visible?(effectArgValues[index]=="true"):false
+    checked:visible?(root.cfg_effectArgValues[index]=="true"):false
 
     onCheckedChanged:{
-        effectArgValues[index]=checked
+        root.cfg_effectArgValues[index]=checked
         root.cfg_effectArgTrigger=!root.cfg_effectArgTrigger
     }
 }

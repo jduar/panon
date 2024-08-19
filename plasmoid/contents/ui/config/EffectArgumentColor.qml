@@ -17,7 +17,7 @@ KQuickControls.ColorButton {
     id:btn
 
     onColorChanged:{
-        effectArgValues[index]=btn.color
+        root.cfg_effectArgValues[index]=btn.color
         root.cfg_effectArgTrigger=!root.cfg_effectArgTrigger
     }
 }

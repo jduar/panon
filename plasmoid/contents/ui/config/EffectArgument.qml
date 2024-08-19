@@ -8,16 +8,15 @@ RowLayout {
 
     property var root
     property int index
-    property var effectArgValues
 
     property var vali:null
 
     Kirigami.FormData.label: visible?root.effect_arguments[index]["name"]+":":""
     visible:root.effect_arguments.length>index
     QQC2.TextField {
-        text:visible? effectArgValues[index]:""
+        text:visible? root.cfg_effectArgValues[index]:""
         onTextChanged:{
-            effectArgValues[index]=text
+            root.cfg_effectArgValues[index]=text
             root.cfg_effectArgTrigger=!root.cfg_effectArgTrigger
         }
         validator:vali
