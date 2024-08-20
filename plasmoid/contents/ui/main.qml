@@ -10,6 +10,8 @@ PlasmoidItem {
 
     compactRepresentation: Spectrum{}
 
+    fullRepresentation: Spectrum{}
+
     toolTipItem: cfg.hideTooltip?tooltipitem:null
 
     // Plasmoid.backgroundHints: PlasmaCore.Types.DefaultBackground | PlasmaCore.Types.ConfigurableBackground
