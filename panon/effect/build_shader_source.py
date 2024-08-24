@@ -93,6 +93,25 @@ def texture_uri(path: Path):
         return str(path.absolute())
     return ''
 
+def build_qsb(shader_source: str) -> str:
+    frag, frag_path = tempfile.mkstemp(dir=tmp_dir, suffix='.frag')
+    os.write(frag, shader_source.encode())
+    os.close(frag)
+    
+    # Find qsb binary
+    paths = ["/usr/lib64/qt6/bin/qsb", "/usr/lib/qt6/bin/qsb"]
+    qsb_bin_path = ""
+    for path in paths:
+        if os.path.exists(path):
+            qsb_bin_path = path
+    if qsb_bin_path == "":
+        raise Exception("qsb not found")
+    
+    qsb, qsb_path = tempfile.mkstemp(dir=tmp_dir, suffix='.qsb')
+    subprocess.run([qsb_bin_path, '--qt6', frag_path, '-o', qsb_path], check=True)
+    os.close(qsb)
+
+    return qsb_path
 
 applet_effect_home = effect_dirs[-1]
 
@@ -144,20 +163,10 @@ tmp_dir = Path('/tmp/panon')
 tmp_dir.mkdir(exist_ok=True)
 
 if 'image_shader' in obj and obj['image_shader']:
-    frag, frag_path = tempfile.mkstemp(dir=tmp_dir, suffix='.frag')
-    os.write(frag, obj['image_shader'].encode())
-    os.close(frag)
-    qsb, qsb_path = tempfile.mkstemp(dir=tmp_dir, suffix='.qsb')
-    subprocess.run(['/usr/lib/qt6/bin/qsb', '--qt6', frag_path, '-o', qsb_path], check=True)
-    obj['image_shader'] = qsb_path
+    obj['image_shader'] = build_qsb(obj['image_shader'])
 
 if 'buffer_shader' in obj and obj['buffer_shader']:
-    frag, frag_path = tempfile.mkstemp(dir=tmp_dir, suffix='.frag')
-    os.write(frag, obj['buffer_shader'].encode())
-    os.close(frag)
-    qsb, qsb_path = tempfile.mkstemp(dir=tmp_dir, suffix='.qsb')
-    subprocess.run(['/usr/lib/qt6/bin/qsb', '--qt6', frag_path, '-o', qsb_path], check=True)
-    obj['buffer_shader'] = qsb_path
+    obj['buffer_shader'] = build_qsb(obj['buffer_shader'])
 
 json.dump(obj, sys.stdout)
 logger.log('obj : %s',json.dumps(obj))
