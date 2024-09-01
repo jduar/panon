@@ -33,6 +33,8 @@ sudo zypper in qt6-shadertools qt6-websockets-imports \
 sudo pacman -S --asdeps qt6-shadertools qt6-websockets \
     python-websockets python-docopt python-numpy python-pyaudio
 ```
+You can also install the [AUR package](https://aur.archlinux.org/packages/plasma6-applets-panon)
+directly!
 
 If you are using another disto, please open an issue so I can include it here.
 
