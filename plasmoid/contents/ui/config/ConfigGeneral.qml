@@ -127,7 +127,7 @@ KCM.SimpleKCM {
 
         QQC2.Label {
             Kirigami.FormData.label: i18n("Version:")
-            text: "0.4.5"
+            text: "6.0.1"
         }
 
     }
