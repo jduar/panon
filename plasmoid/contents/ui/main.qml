@@ -14,7 +14,7 @@ PlasmoidItem {
 
     toolTipItem: cfg.hideTooltip?tooltipitem:null
 
-    // Plasmoid.backgroundHints: PlasmaCore.Types.DefaultBackground | PlasmaCore.Types.ConfigurableBackground
+    Plasmoid.backgroundHints: PlasmaCore.Types.DefaultBackground | PlasmaCore.Types.ConfigurableBackground
 
     Item{id:tooltipitem}
 
