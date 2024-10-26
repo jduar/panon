@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.components as PlasmaComponents
 
 import QtQuick.Controls 2.0 as QQC2
 
@@ -185,6 +186,21 @@ Item{
         text:error_message+(cfg.showFps?fps_message:"")
     }
 
+    QQC2.Label {
+        visible: cfg.showNowPlaying
+        text: mprisItem.artist + (mprisItem.track ? " - " + mprisItem.track : "")
+        style: Text.Raised
+        styleColor: "gray"
+        maximumLineCount: 1
+        anchors.centerIn: parent
+        width: parent.width - 10
+        elide: Text.ElideRight
+        opacity: !mprisItem.isPlaying ? 0.6 : 1
+
+        horizontalAlignment: QQC2.Label.AlignHCenter
+        verticalAlignment: QQC2.Label.AlignVCenter
+    }
+
     MouseArea {
         id:iMouseArea
         hoverEnabled :true
@@ -233,7 +249,7 @@ Item{
                         time_fps_start=time_current_frame
                     }
 
-                        
+
                 if(cfg.glDFT){
                     /*
                     waveBufferSE.newWave=imgsReady.w;

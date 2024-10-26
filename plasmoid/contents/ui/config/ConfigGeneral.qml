@@ -29,6 +29,8 @@ KCM.SimpleKCM {
     property alias cfg_gravity: gravity.currentIndex
     property alias cfg_inversion: inversion.checked
 
+    property alias cfg_showNowPlaying: showNowPlaying.checked
+
     Kirigami.FormLayout {
 
         QQC2.SpinBox {
@@ -56,7 +58,7 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: autoHide
             text: i18nc("@option:radio", "Auto-hide (when audio is gone)")
-            
+
             onCheckedChanged: {
                 if (autoHide.checked) {
                     autoExtend.checked = false;
@@ -123,6 +125,24 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: hideTooltip
             text: i18nc("@option:check", "Hide tooltip")
+        }
+
+        Item {
+            Kirigami.FormData.isSection: true
+        }
+
+        QQC2.CheckBox {
+            id: showNowPlaying
+            Kirigami.FormData.label: i18n("Now playing:")
+            text: i18nc("@option:check", "Show Now Playing")
+        }
+
+        QQC2.Label {
+            text: i18n("Shows the currently playing media information.")
+        }
+
+        Item {
+            Kirigami.FormData.isSection: true
         }
 
         QQC2.Label {

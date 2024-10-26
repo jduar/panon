@@ -18,4 +18,5 @@ PlasmoidItem {
 
     Item{id:tooltipitem}
 
+    Mpris{id: mprisItem}
 }
